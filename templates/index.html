@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafePlay — Athlete Protection & Career Continuity Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+    <!-- Professional Presentation Header -->
+    <header class="top-nav">
+        <div class="brand">
+            <div class="logo-icon">🛡️</div>
+            <div>
+                <h1 class="brand-name">SafePlay <span class="badge-pro">PRO</span></h1>
+                <p class="brand-tagline">Athlete Safety & Protection Governance</p>
+            </div>
+        </div>
+        <div class="role-switch">
+            <button onclick="switchView('athlete')" id="btn-athlete" class="role-btn active">
+                <span class="status-dot green"></span> Athlete View
+            </button>
+            <button onclick="switchView('reviewer')" id="btn-reviewer" class="role-btn">
+                <span class="status-dot blue"></span> IC Reviewer Panel
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Mobile Frame Viewport -->
+    <main class="app-viewport">
+        
+        <!-- Toast Notification Container -->
+        <div id="toast" class="toast-notification"></div>
+
+        <!-- SCREEN 1: HOME DASHBOARD -->
+        <section id="screen-home" class="screen active">
+            <div class="hero-banner">
+                <div class="hero-chip">🔒 End-to-End Encrypted Portal</div>
+                <h2>Your Safety & Career Are Protected</h2>
+                <p>Report safety concerns confidentially, access emergency response networks, and transition coaches smoothly.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <strong>100%</strong>
+                        <span>Identity Privacy</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-box">
+                        <strong>24/7</strong>
+                        <span>Legal & Med Support</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h3>Core Action Hub</h3>
+                <p>Select a verified service below</p>
+            </div>
+
+            <div class="action-grid">
+                <div class="action-card highlight" onclick="showScreen('screen-report')">
+                    <div class="card-icon bg-red">📝</div>
+                    <div class="card-text">
+                        <h4>Report a Concern</h4>
+                        <p>File an anonymous & secure incident report</p>
+                    </div>
+                    <span class="chevron">→</span>
+                </div>
+
+                <div class="action-card" onclick="showScreen('screen-support')">
+                    <div class="card-icon bg-blue">🆘</div>
+                    <div class="card-text">
+                        <h4>Support & Helpline</h4>
+                        <p>24/7 Emergency, Legal & Counseling Services</p>
+                    </div>
+                    <span class="chevron">→</span>
+                </div>
+
+                <div class="action-card" onclick="showScreen('screen-coach')">
+                    <div class="card-icon bg-green">👟</div>
+                    <div class="card-text">
+                        <h4>Find Alternative Coach</h4>
+                        <p>Seamless career transfer without training penalty</p>
+                    </div>
+                    <span class="chevron">→</span>
+                </div>
+
+                <div class="action-card" onclick="showScreen('screen-dashboard')">
+                    <div class="card-icon bg-purple">⚖️</div>
+                    <div class="card-text">
+                        <h4>Investigation Status</h4>
+                        <p>Track fair review progress in real-time</p>
+                    </div>
+                    <span class="chevron">→</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: REPORT A CONCERN -->
+        <section id="screen-report" class="screen">
+            <button class="nav-back" onclick="showScreen('screen-home')">← Home</button>
+            <div class="page-header">
+                <h2>File a Safety Report</h2>
+                <p>Your identity remains protected under strict privacy protocols.</p>
+            </div>
+
+            <form id="report-form" class="pro-form" onsubmit="handleFormSubmit(event)">
+                <div class="field-group">
+                    <label>Concern Category *</label>
+                    <select id="report-category" required>
+                        <option value="">Select category...</option>
+                        <option value="Verbal Abuse & Harassment">Verbal Abuse / Intimidation</option>
+                        <option value="Unsafe Training Environment">Unsafe Equipment / Facility Hazard</option>
+                        <option value="Bias & Discrimination">Selection Bias / Unfair Exclusion</option>
+                        <option value="Financial Exploitation">Stipend Issues / Financial Irregularity</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label>Detailed Incident Overview *</label>
+                    <textarea id="report-details" rows="4" placeholder="Describe the incident (Date, Location, Specific details)..." required></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label>Attach Supporting Evidence (Optional Demo)</label>
+                    <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+                        <span class="upload-icon">📎</span>
+                        <span id="file-label-text">Click to upload document, photo, or audio</span>
+                        <input type="file" id="file-input" style="display:none;" onchange="updateFileName(this)">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Identity Protection Level</label>
+                    <div class="option-grid">
+                        <label class="option-card">
+                            <input type="radio" name="privacy" value="anonymous" checked>
+                            <div>
+                                <strong>Strictly Anonymous</strong>
+                                <span>Identity is hidden even from committee</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="privacy" value="contactable">
+                            <div>
+                                <strong>Contact Permitted</strong>
+                                <span>IC Officers can reach out directly</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Submit Encrypted Report</button>
+            </form>
+        </section>
+
+        <!-- SCREEN 3: GET SUPPORT -->
+        <section id="screen-support" class="screen">
+            <button class="nav-back" onclick="showScreen('screen-home')">← Home</button>
+            <div class="page-header">
+                <h2>Support & Response Network</h2>
+                <p>Verified legal, medical, and psychological emergency response.</p>
+            </div>
+
+            <div class="alert-box">
+                <div class="alert-icon">🚨</div>
+                <div>
+                    <strong>24/7 National Sports Protection Hotline</strong>
+                    <div class="hotline-num">1800-419-SAFE (7233)</div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h3>Fair Investigation Protocol</h3>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-item">
+                    <span class="step-badge">1</span>
+                    <div>
+                        <strong>Confidential Logging</strong>
+                        <p>Report gets timestamped with zero bias labeling.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <span class="step-badge">2</span>
+                    <div>
+                        <strong>Neutral Panel Assignment</strong>
+                        <p>Reviewed by certified Internal Committee (IC) members.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <span class="step-badge">3</span>
+                    <div>
+                        <strong>Objective Assessment</strong>
+                        <p>Evidence gathered with fair hearing for all parties.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <span class="step-badge">4</span>
+                    <div>
+                        <strong>Career Continuity Order</strong>
+                        <p>Safe training transfer & protection measures activated.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 4: FIND ANOTHER COACH -->
+        <section id="screen-coach" class="screen">
+            <button class="nav-back" onclick="showScreen('screen-home')">← Home</button>
+            <div class="page-header">
+                <h2>Career Continuity Directory</h2>
+                <p>Transfer safely to verified alternative training facilities.</p>
+            </div>
+
+            <div class="filter-controls">
+                <select id="sport-filter" onchange="filterCoaches()">
+                    <option value="all">All Disciplines</option>
+                    <option value="athletics">Athletics</option>
+                    <option value="badminton">Badminton</option>
+                    <option value="boxing">Boxing</option>
+                    <option value="swimming">Swimming</option>
+                </select>
+            </div>
+
+            <div id="coach-list" class="coach-grid">
+                <!-- Loaded via JavaScript -->
+            </div>
+        </section>
+
+        <!-- SCREEN 5: INVESTIGATION DASHBOARD -->
+        <section id="screen-dashboard" class="screen">
+            <button class="nav-back" onclick="showScreen('screen-home')">← Home</button>
+            <div class="page-header">
+                <h2>Fair Investigation Dashboard</h2>
+                <p>Neutral progress tracking panel for active cases.</p>
+            </div>
+
+            <div id="cases-list" class="cases-grid">
+                <!-- Loaded via JavaScript -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Case Details Modal Popup -->
+    <div id="case-modal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
